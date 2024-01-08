@@ -7,8 +7,9 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  picture: String,
-  reviews: [reviewSchema], // Embed the Review schema here
+  reviews: {
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

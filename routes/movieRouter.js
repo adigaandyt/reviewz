@@ -1,19 +1,18 @@
 // routes/movieRouter.js
 const express = require('express');
-const multer = require('multer');
 const Movie = require('../models/movie'); // Adjust the path as needed
+const reviewRouter = require('./reviewRouter'); // Import the reviewRouter
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
 
 // Route to create a new movie
-router.post('/', upload.single('picture'), async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { title } = req.body;
 
     const movie = new Movie({
       title,
-      picture: req.file.filename, // Assuming you are uploading pictures
+      reviews: [], // Initialize with an empty array for reviews
     });
 
     await movie.save();
@@ -48,5 +47,8 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching the movie' });
   }
 });
+
+// Use the reviewRouter for review-related routes
+router.use('/:id/reviews', reviewRouter);
 
 module.exports = router;

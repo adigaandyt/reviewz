@@ -10,6 +10,10 @@ const reviewSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  movieId: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Review', reviewSchema);
